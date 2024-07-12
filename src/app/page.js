@@ -56,7 +56,7 @@ export default async function Home() {
               id="category-name"
               name="category-name"
               required
-              placheholder="Enter New Category"
+              placeholder="Enter New Category"
             />
             <button
               className="border-solid border-2 border-sky-500"

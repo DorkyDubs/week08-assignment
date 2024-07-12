@@ -7,6 +7,7 @@
     username VARCHAR(255),
     post_text TEXT NOT NULL,
     likes INT,
+    no_of_comments INT,
     category_id INT REFERENCES categories (id)
 );``CREATE TABLE IF NOT EXISTS comments (
     id SERIAL PRIMARY KEY,
