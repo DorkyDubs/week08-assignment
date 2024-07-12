@@ -3,6 +3,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation"; //!<<this file, not other
 import Link from "next/link";
 import Image from "next/image";
+import { handleDelete } from "@/utils/deleteFunction";
+import { updateLikes } from "@/utils/updateLikes";
 //we need some nave sorted
 //need some query strings to sort the data asc and desc
 
@@ -19,7 +21,19 @@ export default async function postsPage({ params }) {
     no_of_comments INT,
     img_src TEXT,
     category_id INT REFERENCES categories (id))`);
-  console.log(params.category);
+
+  async function handleLike(table, id) {
+    updateLikes(table, id);
+    revalidatePath(`/${params.category}`); //!maybe move the refreshinto function in util?
+    redirect(`/${params.category}`);
+  }
+
+  async function doDelete(table, id) {
+    handleDelete(table, id);
+    revalidatePath(`/${params.category}`); //!maybe move the refreshinto function in util?
+    redirect(`/${params.category}`);
+  }
+
   async function handleSubmit(formdata) {
     "use server";
 
@@ -33,15 +47,21 @@ export default async function postsPage({ params }) {
 
     // Need to put data into database
     const db = dbConnect();
-    const currentPosts = (
-      await db.query(`SELECT * FROM categories WHERE id = 3 `)
-    ).rows; //!dunno if needed firgure out in testing
+
     await db.query(
       `INSERT INTO ${params.category} (username,post_text,category,likes, no_of_comments) VALUES ($1,$2,$3,$4,$5)`,
       [postUsername, postText, params.category, 0, 0]
     );
+    const currentPosts = await db.query(
+      `SELECT no_of_posts FROM categories WHERE category_name = '${params.category}' `
+    ); //!dunno if needed firgure out in testing
+    const wrangledPostCount = Number(currentPosts.rows[0].no_of_posts) + 1;
+    await db.query(
+      `UPDATE categories SET no_of_posts = ($1) WHERE category_name = '${params.category}'`,
+      [wrangledPostCount]
+    );
+    console.log(wrangledPostCount);
 
-    console.log(currentPosts);
     // await db.query(`INSERT INTO ${params.post} (username,comment) VALUES ($1,$2)`, [
     //     commentUsername,
     //     commentText,
@@ -105,10 +125,13 @@ export default async function postsPage({ params }) {
         </form>
       </div>
 
-      <div>
+      <section className="">
+        {/* ^ for all post/ posts box container */}
         <h3> posts</h3>
         {data.map((data) => (
-          <li key={data.id} className="">
+          <div key={data.id} className="">
+            {/* ^ for each post */}
+
             {/* <Image
               src="data.img_src"
               alt="user image"
@@ -117,12 +140,24 @@ export default async function postsPage({ params }) {
             /> */}
             <h3>Username: {data.username}</h3>
             <h4>{data.post_text}</h4>
-            <h5>Comments {data.no_of_comments}</h5>
+            <h5>Comments: {data.no_of_comments}</h5>
             <h5> Likes: {data.likes}</h5>
+            <button
+              className="border-solid border-2 border-green-500"
+              action={handleLike(params.category, data.id)}
+            >
+              Like
+            </button>
+            <button
+              className="border-solid border-2 border-red-500"
+              action={doDelete(params.category, data.id)}
+            >
+              Delete
+            </button>
             <Link href={`${params.category}/${data.id}`}>Read comments</Link>
-          </li>
+          </div>
         ))}
-      </div>
+      </section>
     </>
   );
 }

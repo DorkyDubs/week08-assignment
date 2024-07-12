@@ -17,12 +17,15 @@ export default async function Home() {
     "use server";
     const db = dbConnect();
     const categoryName = formdata.get("category-name");
-
+    const firstLetter = categoryName.charAt(0);
+    const remainingLetters = categoryName.substring(1);
+    const firstLetterCap = firstLetter.toUpperCase();
+    const cappedCategoryName = firstLetterCap + remainingLetters;
     // Need to put data into database
 
     await db.query(
       `INSERT INTO categories (category_name, no_of_posts) VALUES ($1,$2)`,
-      [categoryName, 0]
+      [cappedCategoryName, 0]
     );
     // await db.query(`INSERT INTO ${params.post} (username,comment) VALUES ($1,$2)`, [
     //     commentUsername,
@@ -42,7 +45,12 @@ export default async function Home() {
         <div>
           {data.map((data) => (
             <li key={data.id} className="">
-              <Link href={`${data.category_name}`}>{data.category_name}</Link>
+              <Link href={`${data.category_name}`}>{data.category_name}</Link>{" "}
+              <Link href={`${data.category_name}`}>
+                {" "}
+                Posts: {data.no_of_posts}{" "}
+              </Link>
+              {/*//? yes this s is a duplicate, it's so each part can be clicked to go there. It's split incase they need to stack when styling */}
             </li>
           ))}
         </div>
