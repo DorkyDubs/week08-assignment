@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation"; //!<<this file, not other
 import { addTableDigits } from "@/utils/addTableDigits";
 import DeleteButton from "@/utils/DeleteCommentFunction";
+import LikeButton from "@/utils/LikeButton";
 //we need some nave sorted
 //need some query strings to sort the data asc and desc
 
@@ -132,14 +133,17 @@ export default async function commentsPage({ params }) {
                 Like
               </button>{" "}
             </form>*/}
+              <LikeButton
+                idData={data.id}
+                nameTable={tableName}
+                path={commentPath}
+              />
               <DeleteButton
                 cat={params.category}
                 postId={params.post}
                 nameTable={tableName}
                 idData={data.id}
                 path={commentPath}
-                isPost={0}
-                //! neededed to say if is post or comment.if is post, will run table drop on delete
               />
             </div>
           ))}

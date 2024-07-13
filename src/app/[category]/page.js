@@ -7,6 +7,7 @@ import { handleDelete } from "@/utils/DeletePostFunction";
 import { updateLikes } from "@/utils/updateLikes";
 //we need some nave sorted
 import DeleteButton from "@/utils/DeletePostFunction";
+import LikeButton from "@/utils/LikeButton";
 //need some query strings to sort the data asc and desc
 
 export default async function postsPage({ params }) {
@@ -155,6 +156,11 @@ export default async function postsPage({ params }) {
             <h5>Comments: {data.no_of_comments}</h5>
             <Link href={`/${params.category}/${data.id}`}> See comments</Link>
             <h5> Likes: {data.likes}</h5>
+            <LikeButton
+              idData={data.id}
+              nameTable={params.category}
+              path={params.category}
+            />
             <DeleteButton
               nameTable={params.category}
               idData={data.id}
