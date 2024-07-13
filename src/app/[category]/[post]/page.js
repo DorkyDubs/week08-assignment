@@ -103,11 +103,19 @@ export default async function commentsPage({ params }) {
       )
     ).rows;
     const post = postdata[0];
+    console.log(post);
     return (
       <>
         <p> all them comments</p>
         {/* //! Want original post cotent here */}
-
+        <div className="">
+          <div>
+            {" "}
+            {post.username} speaks truth on {params.category}
+          </div>
+          <div> Claims &quot; {post.title} "</div>
+          <h4 className="text-xl"> {post.post_text}</h4>
+        </div>
         {/* //! and display form to add a comment that are connected to database
       columns by names (in input) */}
         <form action={handleSubmit}>
