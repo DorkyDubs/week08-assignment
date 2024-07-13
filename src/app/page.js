@@ -4,13 +4,12 @@ import Link from "next/link";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation"; //!<<this file, not other
 
-export async function generateMetadata({ params }) {
+function generateMetadata({ params }) {
   return {
     title: `The Best Topics Board`,
     description: `See what users have to say about anything`,
   };
-
-
+}
 
 export default async function Home() {
   const db = dbConnect();
@@ -48,9 +47,7 @@ export default async function Home() {
 
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <h1>catgories go here</h1>
-
+      <main className="flex min-h-screen flex-col items-center justify-between pt-[100px] border-t-4 border-teal-400 border-dotted">
         <div>
           {data.map((data) => (
             <li key={data.id} className="">
@@ -63,9 +60,8 @@ export default async function Home() {
             </li>
           ))}
         </div>
-
         <div>
-          <form action={handleSubmit}>
+          <form action={handleSubmit} className="pb-[100px] ">
             <label htmlFor="category-name">New Category: :</label>
             <input
               className="text-slate-900"

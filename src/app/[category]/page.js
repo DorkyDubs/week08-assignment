@@ -7,6 +7,7 @@ import Image from "next/image";
 //we need some nave sorted
 import DeleteButton from "@/utils/DeletePostFunction";
 import LikeButton from "@/utils/LikeButton";
+
 //need some query strings to sort the data asc and desc
 export async function generateMetadata({ params }) {
   return {
@@ -14,8 +15,10 @@ export async function generateMetadata({ params }) {
     description: `See what users have to say about ${params.category} `,
   };
 }
+
 export default async function postsPage({ params }) {
   const db = dbConnect();
+
   //!This method creates a lot of tables. it isn't neccesary but had a desire to abuse supabase. The alternative would be to have three tables : category, posts and comments. For filtering purposes each post could be linked to category through a foriegn key denoting the category id, and likewise each comment could have a key connecting it to the posts id. Having already done this in a previous assignment decided to tackle the issue of directing to different tables for one-to-many relationships, but included the reference lines when creating tables so joins can be implemented if desired.
 
   await db.query(`CREATE TABLE IF NOT EXISTS ${params.category} (
