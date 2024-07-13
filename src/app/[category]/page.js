@@ -3,9 +3,10 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation"; //!<<this file, not other
 import Link from "next/link";
 import Image from "next/image";
-import { handleDelete } from "@/utils/deleteFunction";
+import { handleDelete } from "@/utils/DeleteFunction";
 import { updateLikes } from "@/utils/updateLikes";
 //we need some nave sorted
+import DeleteButton from "@/utils/DeleteFunction";
 //need some query strings to sort the data asc and desc
 
 export default async function postsPage({ params }) {
@@ -22,17 +23,19 @@ export default async function postsPage({ params }) {
     img_src TEXT,
     category_id INT REFERENCES categories (id))`);
 
-  async function handleLike(table, id) {
-    updateLikes(table, id);
-    revalidatePath(`/${params.category}`); //!maybe move the refreshinto function in util?
-    redirect(`/${params.category}`);
-  }
+  // async function handleLike(table, id) {
+  //   updateLikes(table, id);
+  //   revalidatePath(`/${params.category}`); //!maybe move the refreshinto function in util?
+  //   redirect(`/${params.category}`);
+  // }
 
-  async function doDelete(table, id) {
-    handleDelete(table, id);
-    revalidatePath(`/${params.category}`); //!maybe move the refreshinto function in util?
-    redirect(`/${params.category}`);
-  }
+  // async function doDelete(table, id) {
+  //   console.log(table, id);
+  //   handleDelete(table, id);
+
+  //   revalidatePath(`/`); //!maybe move the refreshinto function in util as well?
+  //   redirect(`/`); //! also implement a password function
+  // }
 
   async function handleSubmit(formdata) {
     "use server";
@@ -61,11 +64,6 @@ export default async function postsPage({ params }) {
       [wrangledPostCount]
     );
     console.log(wrangledPostCount);
-
-    // await db.query(`INSERT INTO ${params.post} (username,comment) VALUES ($1,$2)`, [
-    //     commentUsername,
-    //     commentText,
-    //   ]);//! this bit to update like count and no_of_posts cont
 
     revalidatePath(`/${params.category}`);
     redirect(`/${params.category}`);
@@ -141,20 +139,22 @@ export default async function postsPage({ params }) {
             <h3>Username: {data.username}</h3>
             <h4>{data.post_text}</h4>
             <h5>Comments: {data.no_of_comments}</h5>
+            <Link href={`/${params.category}/${data.id}`}> See comments</Link>
             <h5> Likes: {data.likes}</h5>
-            <button
-              className="border-solid border-2 border-green-500"
-              action={handleLike(params.category, data.id)}
+            <DeleteButton
+              nameTable={params.category}
+              idData={data.id}
+              path={params.category}
+              isPost={1}
+              //! neededed to say if is post or comment.if is post, will run table drop on delete
+            />
+            {/* <form
+              action={handleLike(params.category, data.id, params.category)}
             >
-              Like
-            </button>
-            <button
-              className="border-solid border-2 border-red-500"
-              action={doDelete(params.category, data.id)}
-            >
-              Delete
-            </button>
-            <Link href={`${params.category}/${data.id}`}>Read comments</Link>
+              <button className="border-solid border-2 border-green-500">
+                Like
+              </button>
+            </form>*/}
           </div>
         ))}
       </section>
