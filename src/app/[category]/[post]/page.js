@@ -14,7 +14,7 @@ export async function generateMetadata({ params }) {
   const post = posts[0];
 
   return {
-    title: ` ${post.username}'s Post about ${params.category}`,
+    title: ` ${post.username}'s Post about ${params.Title}`,
     description: `See what  ${post.username} and other usershave to say about ${params.category}`,
   };
 }

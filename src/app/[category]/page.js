@@ -136,12 +136,12 @@ export default async function postsPage({ params }) {
             />
           </div>
           <div>
-            <label htmlFor="password">PW: </label>
+            <label htmlFor="pass">PW: </label>
             <br />
             <input
               className="text-slate-900"
-              type="password"
-              id="user-password"
+              type="text"
+              id="user-pass"
               name="wordpass"
               required
               placeholder="If want to delete"
