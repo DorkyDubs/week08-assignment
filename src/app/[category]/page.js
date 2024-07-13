@@ -141,7 +141,7 @@ export default async function postsPage({ params }) {
             <br />
             <input
               className="text-slate-900"
-              type="text"
+              type="password"
               id="user-pass"
               name="wordpass"
               required

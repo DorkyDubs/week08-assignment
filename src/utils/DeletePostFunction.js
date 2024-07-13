@@ -53,7 +53,7 @@ export default function DeleteButton(nameTable, idData, path) {
 
           <input
             className="text-slate-900"
-            type="text"
+            type="password"
             id="user-pass"
             name="wordpass"
             required
