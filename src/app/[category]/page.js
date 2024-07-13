@@ -49,7 +49,7 @@ export default async function postsPage({ params }) {
 
     const postText = formdata.get("post-text");
     const postUsername = formdata.get("post-username");
-    const postTitle = formdat.get("post-title");
+    const postTitle = formdata.get("post-title");
     const sec = formdata.get("wordpass");
     if (formdata.get("post-img" != undefined)) {
       const postImg = formdata.get("post-img");
@@ -137,6 +137,7 @@ export default async function postsPage({ params }) {
           </div>
           <div>
             <label htmlFor="pass">PW: </label>
+            {/* //! Didn't want randoms to delete others work, but uses text rather than password type as that flags browsers to look for data links, as vercel isn't secure right now */}
             <br />
             <input
               className="text-slate-900"
