@@ -48,7 +48,7 @@ export default function DeleteButton(nameTable, idData, path) {
         <button className="border-solid border-2 border-red-500">Delete</button>
         <div>
           <label htmlFor="pass" required>
-            PW:{" "}
+            Pass please:{" "}
           </label>
 
           <input

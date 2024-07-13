@@ -3,6 +3,15 @@ import { dbConnect } from "@/utils/fetchdata";
 import Link from "next/link";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation"; //!<<this file, not other
+
+export async function generateMetadata({ params }) {
+  return {
+    title: `The Best Topics Board`,
+    description: `See what users have to say about anything`,
+  };
+
+
+
 export default async function Home() {
   const db = dbConnect();
 

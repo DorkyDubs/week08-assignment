@@ -136,8 +136,8 @@ export default async function postsPage({ params }) {
             />
           </div>
           <div>
-            <label htmlFor="pass">PW: </label>
-            {/* //! Didn't want randoms to delete others work, but uses text rather than password type as that flags browsers to look for data links, as vercel isn't secure right now */}
+            <label htmlFor="pass">Passcode: </label>
+
             <br />
             <input
               className="text-slate-900"
