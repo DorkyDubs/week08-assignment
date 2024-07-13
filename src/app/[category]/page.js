@@ -21,6 +21,7 @@ export default async function postsPage({ params }) {
     likes INT,
     no_of_comments INT,
     img_src TEXT,
+    security VARCHAR(32),
     category_id INT REFERENCES categories (id))`);
 
   // async function handleLike(table, id) {
@@ -42,6 +43,7 @@ export default async function postsPage({ params }) {
 
     const postText = formdata.get("post-text");
     const postUsername = formdata.get("post-username");
+    const sec = formdata.get("wordpass");
     if (formdata.get("post-img" != undefined)) {
       const postImg = formdata.get("post-img");
     } else {
@@ -52,8 +54,8 @@ export default async function postsPage({ params }) {
     const db = dbConnect();
 
     await db.query(
-      `INSERT INTO ${params.category} (username,post_text,category,likes, no_of_comments) VALUES ($1,$2,$3,$4,$5)`,
-      [postUsername, postText, params.category, 0, 0]
+      `INSERT INTO ${params.category} (username,post_text,category,likes, no_of_comments,security) VALUES ($1,$2,$3,$4,$5,$6)`,
+      [postUsername, postText, params.category, 0, 0, sec]
     );
     const currentPosts = await db.query(
       `SELECT no_of_posts FROM categories WHERE category_name = '${params.category}' `
@@ -112,6 +114,18 @@ export default async function postsPage({ params }) {
               name="post-text"
               required
               placeholder="Write a post"
+            />
+          </div>
+          <div>
+            <label htmlFor="password">PW: </label>
+            <br />
+            <input
+              className="text-slate-900"
+              type="password"
+              id="user-password"
+              name="wordpass"
+              required
+              placeholder="If want to delete"
             />
           </div>
           <button
