@@ -2,7 +2,7 @@ import { dbConnect } from "./fetchdata";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation"; //!<<this file, not other
 import { addTableDigits } from "./addTableDigits";
-export default function DeleteButton(nameTable, idData, path, isPost) {
+export default function DeleteButton(nameTable, idData, path) {
   async function handleSubmit(formdata) {
     "use server";
     const db = dbConnect();
@@ -20,24 +20,8 @@ export default function DeleteButton(nameTable, idData, path, isPost) {
     ).rows;
     console.log(codeCheck[0].security);
     console.log(secretCode);
-    if (Number(nameTable.isPost) === 1) {
-      if (secretCode === codeCheck[0].security) {
-        await db.query(
-          `DELETE FROM ${nameTable.nameTable} WHERE id = ${nameTable.idData} RETURNING *`
-        );
-        const currentPosts = await db.query(
-          `SELECT no_of_posts FROM categories WHERE category_name =  '${nameTable.nameTable}' `
-        );
-        const wrangledPostCount = Number(currentPosts.rows[0].no_of_posts) - 1;
-        await db.query(
-          `UPDATE categories SET no_of_posts = ($1) WHERE category_name = '${nameTable.nameTable}'`,
-          [wrangledPostCount]
-        );
-        console.log(nameTable.isPost);
 
-        await db.query(`DROP TABLE IF EXISTS ${postTableName}`);
-      }
-    } else {
+    if (secretCode === codeCheck[0].security) {
       await db.query(
         `DELETE FROM ${nameTable.nameTable} WHERE id = ${nameTable.idData} RETURNING *`
       );
@@ -49,9 +33,12 @@ export default function DeleteButton(nameTable, idData, path, isPost) {
         `UPDATE categories SET no_of_posts = ($1) WHERE category_name = '${nameTable.nameTable}'`,
         [wrangledPostCount]
       );
+      console.log(nameTable.isPost);
+
+      await db.query(`DROP TABLE IF EXISTS ${postTableName}`);
+      revalidatePath(`/${nameTable.path}`);
+      redirect(`/${nameTable.path}`);
     }
-    revalidatePath(`/${nameTable.path}`);
-    redirect(`/${nameTable.path}`);
   }
 
   return (

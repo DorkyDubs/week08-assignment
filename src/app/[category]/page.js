@@ -3,10 +3,10 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation"; //!<<this file, not other
 import Link from "next/link";
 import Image from "next/image";
-import { handleDelete } from "@/utils/DeleteFunction";
+import { handleDelete } from "@/utils/DeletePostFunction";
 import { updateLikes } from "@/utils/updateLikes";
 //we need some nave sorted
-import DeleteButton from "@/utils/DeleteFunction";
+import DeleteButton from "@/utils/DeletePostFunction";
 //need some query strings to sort the data asc and desc
 
 export default async function postsPage({ params }) {
@@ -139,7 +139,7 @@ export default async function postsPage({ params }) {
 
       <section className="">
         {/* ^ for all post/ posts box container */}
-        <h3> posts</h3>
+
         {data.map((data) => (
           <div key={data.id} className="">
             {/* ^ for each post */}

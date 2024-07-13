@@ -2,7 +2,7 @@ import { dbConnect } from "@/utils/fetchdata";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation"; //!<<this file, not other
 import { addTableDigits } from "@/utils/addTableDigits";
-
+import DeleteButton from "@/utils/DeleteCommentFunction";
 //we need some nave sorted
 //need some query strings to sort the data asc and desc
 
@@ -15,13 +15,7 @@ export default async function commentsPage({ params }) {
   const tableId = await addTableDigits(params.post); //? standardizes the length of the Id number in the tables. Not hugely practical at this scale.
   const postNumber = Number(params.post);
   const tableName = params.category + tableId;
-  console.log(postNumber);
-  console.log(params.post);
-  console.log(params.category);
-
-  console.log(tableName);
-  console.log("'O'");
-  console.log(postNumber.type);
+  const commentPath = `/${params.category}/${params.post}`;
   if (isNaN(postNumber)) {
     return <h3>404. Page not here.</h3>;
   } else {
@@ -138,12 +132,15 @@ export default async function commentsPage({ params }) {
                 Like
               </button>{" "}
             </form>*/}
-              {/* 
-            <form action={doDelete(data)}>
-              <button className="border-solid border-2 border-red-500">
-                Delete
-              </button>
-            </form> */}
+              <DeleteButton
+                cat={params.category}
+                postId={params.post}
+                nameTable={tableName}
+                idData={data.id}
+                path={commentPath}
+                isPost={0}
+                //! neededed to say if is post or comment.if is post, will run table drop on delete
+              />
             </div>
           ))}
         </section>
