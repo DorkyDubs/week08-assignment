@@ -6,7 +6,18 @@ import DeleteButton from "@/utils/DeleteCommentFunction";
 import LikeButton from "@/utils/LikeButton";
 //we need some nave sorted
 //need some query strings to sort the data asc and desc
+export async function generateMetadata({ params }) {
+  const db = dbConnect();
+  const posts = (
+    await db.query(`SELECT * FROM ${params.category} WHERE id = ${params.post}`)
+  ).rows;
+  const post = posts[0];
 
+  return {
+    title: ` ${post.username}'s Post about ${params.category}`,
+    description: `See what  ${post.username} and other usershave to say about ${params.category}`,
+  };
+}
 //! to do : get posts data, display data
 
 export default async function commentsPage({ params }) {
@@ -86,6 +97,12 @@ export default async function commentsPage({ params }) {
     //   )
     // ).rows;
     const datas = (await db.query(`SELECT * FROM ${tableName} `)).rows;
+    const postdata = (
+      await db.query(
+        `SELECT * FROM ${params.category} WHERE id = ${params.post}`
+      )
+    ).rows;
+    const post = postdata[0];
     return (
       <>
         <p> all them comments</p>

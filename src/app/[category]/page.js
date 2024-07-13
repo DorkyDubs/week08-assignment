@@ -3,13 +3,17 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation"; //!<<this file, not other
 import Link from "next/link";
 import Image from "next/image";
-import { handleDelete } from "@/utils/DeletePostFunction";
-import { updateLikes } from "@/utils/updateLikes";
+
 //we need some nave sorted
 import DeleteButton from "@/utils/DeletePostFunction";
 import LikeButton from "@/utils/LikeButton";
 //need some query strings to sort the data asc and desc
-
+export async function generateMetadata({ params }) {
+  return {
+    title: `${params.category} Posts`,
+    description: `See what users have to say about ${params.category} `,
+  };
+}
 export default async function postsPage({ params }) {
   const db = dbConnect();
   //!This method creates a lot of tables. it isn't neccesary but had a desire to abuse supabase. The alternative would be to have three tables : category, posts and comments. For filtering purposes each post could be linked to category through a foriegn key denoting the category id, and likewise each comment could have a key connecting it to the posts id. Having already done this in a previous assignment decided to tackle the issue of directing to different tables for one-to-many relationships, but included the reference lines when creating tables so joins can be implemented if desired.
@@ -19,6 +23,7 @@ export default async function postsPage({ params }) {
     username VARCHAR(255),
     post_text TEXT NOT NULL,
     category TEXT,
+    title TEXT,
     likes INT,
     no_of_comments INT,
     img_src TEXT,
@@ -44,6 +49,7 @@ export default async function postsPage({ params }) {
 
     const postText = formdata.get("post-text");
     const postUsername = formdata.get("post-username");
+    const postTitle = formdat.get("post-title");
     const sec = formdata.get("wordpass");
     if (formdata.get("post-img" != undefined)) {
       const postImg = formdata.get("post-img");
@@ -55,8 +61,8 @@ export default async function postsPage({ params }) {
     const db = dbConnect();
 
     await db.query(
-      `INSERT INTO ${params.category} (username,post_text,category,likes, no_of_comments,security) VALUES ($1,$2,$3,$4,$5,$6)`,
-      [postUsername, postText, params.category, 0, 0, sec]
+      `INSERT INTO ${params.category} (username,post_text,category,likes, no_of_comments,security,title) VALUES ($1,$2,$3,$4,$5,$6,$7)`,
+      [postUsername, postText, params.category, 0, 0, sec, postTitle]
     );
     const currentPosts = await db.query(
       `SELECT no_of_posts FROM categories WHERE category_name = '${params.category}' `
@@ -90,6 +96,18 @@ export default async function postsPage({ params }) {
             required
             placeholder="Select a username"
           />{" "}
+          <br />
+          <label htmlFor="post-title" required>
+            Title:{" "}
+          </label>
+          <input
+            className="  text-slate-900 "
+            type="text"
+            id="post-title"
+            name="post-title"
+            required
+            placeholder="Title"
+          />
           {/* <div>
             {" "}
             <label htmlFor="post-img" required>
@@ -152,6 +170,7 @@ export default async function postsPage({ params }) {
               height={300}
             /> */}
             <h3>Username: {data.username}</h3>
+            <h3>Title: {data.title}</h3>
             <h4>{data.post_text}</h4>
             <h5>Comments: {data.no_of_comments}</h5>
             <Link href={`/${params.category}/${data.id}`}> See comments</Link>
