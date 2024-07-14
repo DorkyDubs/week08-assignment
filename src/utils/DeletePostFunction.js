@@ -43,16 +43,16 @@ export default function DeleteButton(nameTable, idData, path) {
 
   return (
     <>
-      <form action={handleSubmit} className="flex flex-row justify-between">
+      <form action={handleSubmit} className="flex flex-row justify-between ">
         {" "}
-        <button className="border-solid border-2 border-red-500 ">
+        <button className="border-solid border-2 border-red-500 p-3">
           Delete
         </button>
-        <div className="">
+        <div>
           <label htmlFor="pass" required className="text-[10px]"></label>
 
           <input
-            className="text-slate-900 w-[10rem] object-center border-white border-2"
+            className="text-slate-900 w-[10rem]  "
             type="password"
             id="user-pass"
             name="wordpass"

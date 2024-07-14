@@ -2,7 +2,7 @@ import { dbConnect } from "@/utils/fetchdata";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation"; //!<<this file, not other
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
 
 //we need some nave sorted
 import DeleteButton from "@/utils/DeletePostFunction";

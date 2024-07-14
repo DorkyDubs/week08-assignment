@@ -107,19 +107,26 @@ export default async function commentsPage({ params }) {
     return (
       <>
         <main className="flex min-h-screen flex-col items-center justify-between  pt-[100px] border-t-4">
-          <p> all them comments</p>
           {/* //! Want original post cotent here */}
-          <div className="">
+          <div className="border-2 border-yellow-100 w-[16rem] text-center">
             <div>
-              {" "}
-              {post.username} speaks truth on {params.category}
+              <div className="bg-teal-200 text-black">
+                {" "}
+                {post.username} speaks truth on {params.category}
+              </div>
+              <div className="bg-teal-100 text-black">
+                {" "}
+                Claims &quot; {post.title} "
+              </div>
+              <h4 className="text-center text-xl font-bold bg-teal-50 text-black h-auto pb-[1rem]">
+                {" "}
+                {post.post_text}
+              </h4>
             </div>
-            <div> Claims &quot; {post.title} "</div>
-            <h4 className="text-xl"> {post.post_text}</h4>
           </div>
           {/* //! and display form to add a comment that are connected to database
       columns by names (in input) */}
-          <div className="flex flex-column">
+          <div className="flex flex-column border-2 border-yellow-100 w-[16rem] text-center">
             {" "}
             <form action={handleSubmit}>
               <div>
@@ -135,7 +142,9 @@ export default async function commentsPage({ params }) {
                 />{" "}
               </div>
               <div>
-                <label htmlFor="comment-text">Post:</label>
+                <div>
+                  <label htmlFor="comment-text">Post:</label>
+                </div>
                 <input
                   className="text-slate-900"
                   type="text"
@@ -167,18 +176,20 @@ export default async function commentsPage({ params }) {
                 Like
               </button>{" "}
             </form>*/}
-                <LikeButton
-                  idData={data.id}
-                  nameTable={tableName}
-                  path={commentPath}
-                />
-                <DeleteButton
-                  cat={params.category}
-                  postId={params.post}
-                  nameTable={tableName}
-                  idData={data.id}
-                  path={commentPath}
-                />
+                <div>
+                  <LikeButton
+                    idData={data.id}
+                    nameTable={tableName}
+                    path={commentPath}
+                  />
+                  <DeleteButton
+                    cat={params.category}
+                    postId={params.post}
+                    nameTable={tableName}
+                    idData={data.id}
+                    path={commentPath}
+                  />
+                </div>
               </div>
             ))}
           </section>

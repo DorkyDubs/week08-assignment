@@ -45,6 +45,8 @@ Please also provide an assignment reflection in your project README.md file.
 🏹 Feel free to add any other reflections you would like to share about your submission e.g.
 
 What went really well and what could have gone better?
+Tailwind abandoned me when styling delete button. it all went well but stopped implementing or responding after I did a git push. I can copy code in from other files and it will work but changes in that files no longer function. Not a fan.
+
 Detailing useful external sources that helped you complete the assignment (e.g Youtube tutorials).
 Describing errors or bugs you encountered while completing your assignment.
 Requesting feedback about a specific part of your submission.
