@@ -116,7 +116,7 @@ export default async function commentsPage({ params }) {
               </div>
               <div className="bg-teal-100 text-black">
                 {" "}
-                Claims &quot; {post.title} "
+                Claims &quot; {post.title} &quot;
               </div>
               <h4 className="text-center text-xl font-bold bg-teal-50 text-black h-auto pb-[1rem]">
                 {" "}
