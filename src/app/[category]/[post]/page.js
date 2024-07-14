@@ -106,73 +106,83 @@ export default async function commentsPage({ params }) {
     console.log(post);
     return (
       <>
-        <p> all them comments</p>
-        {/* //! Want original post cotent here */}
-        <div className="">
-          <div>
-            {" "}
-            {post.username} speaks truth on {params.category}
+        <main className="flex min-h-screen flex-col items-center justify-between  pt-[100px] border-t-4">
+          <p> all them comments</p>
+          {/* //! Want original post cotent here */}
+          <div className="">
+            <div>
+              {" "}
+              {post.username} speaks truth on {params.category}
+            </div>
+            <div> Claims &quot; {post.title} "</div>
+            <h4 className="text-xl"> {post.post_text}</h4>
           </div>
-          <div> Claims &quot; {post.title} "</div>
-          <h4 className="text-xl"> {post.post_text}</h4>
-        </div>
-        {/* //! and display form to add a comment that are connected to database
+          {/* //! and display form to add a comment that are connected to database
       columns by names (in input) */}
-        <form action={handleSubmit}>
-          <label htmlFor="comment-username">Username: :</label>
-          <input
-            className="text-slate-900"
-            type="text"
-            id="comment-username"
-            name="comment-username"
-            required
-            placheholder="user ID"
-          />{" "}
-          <label htmlFor="comment-text">Post:</label>
-          <input
-            className="text-slate-900"
-            type="text"
-            id="comment-text"
-            name="comment-text"
-            required
-            placheholder="Write post here"
-          />
-          <button
-            className="border-solid border-2 border-sky-500"
-            type="submit"
-          >
-            submit comment
-          </button>
-        </form>
-        <section className="">
-          {/* ^ for all comments */}
-          {datas.map((data) => (
-            <div key={data.id} className="">
-              {/* ^ for each comment */}
-              <h3>Username: {data.username}</h3>
-              <h4>{data.post_text}</h4>
-              <h5>Comments: {data.comment_text}</h5>
-              <h7>Likes : {data.likes}</h7>
-              {/* <form action={handleLike(tableName, data.id)}>
+          <div className="flex flex-column">
+            {" "}
+            <form action={handleSubmit}>
+              <div>
+                {" "}
+                <label htmlFor="comment-username">Username: :</label>
+                <input
+                  className="text-slate-900"
+                  type="text"
+                  id="comment-username"
+                  name="comment-username"
+                  required
+                  placheholder="user ID"
+                />{" "}
+              </div>
+              <div>
+                <label htmlFor="comment-text">Post:</label>
+                <input
+                  className="text-slate-900"
+                  type="text"
+                  id="comment-text"
+                  name="comment-text"
+                  required
+                  placheholder="Write post here"
+                />
+              </div>
+              <button
+                className="border-solid border-2 border-sky-500"
+                type="submit"
+              >
+                submit comment
+              </button>
+            </form>
+          </div>
+          <section className="">
+            {/* ^ for all comments */}
+            {datas.map((data) => (
+              <div key={data.id} className="">
+                {/* ^ for each comment */}
+                <h3>Username: {data.username}</h3>
+                <h4>{data.post_text}</h4>
+                <h5>Comments: {data.comment_text}</h5>
+                <h7>Likes : {data.likes}</h7>
+                {/* <form action={handleLike(tableName, data.id)}>
               <button className="border-solid border-2 border-green-500">
                 Like
               </button>{" "}
             </form>*/}
-              <LikeButton
-                idData={data.id}
-                nameTable={tableName}
-                path={commentPath}
-              />
-              <DeleteButton
-                cat={params.category}
-                postId={params.post}
-                nameTable={tableName}
-                idData={data.id}
-                path={commentPath}
-              />
-            </div>
-          ))}
-        </section>
+                <LikeButton
+                  idData={data.id}
+                  nameTable={tableName}
+                  path={commentPath}
+                />
+                <DeleteButton
+                  cat={params.category}
+                  postId={params.post}
+                  nameTable={tableName}
+                  idData={data.id}
+                  path={commentPath}
+                />
+              </div>
+            ))}
+          </section>
+        </main>
       </>
     );
   } //<-else close

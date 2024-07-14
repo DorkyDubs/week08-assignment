@@ -84,34 +84,39 @@ export default async function postsPage({ params }) {
 
   return (
     <>
-      <h1>{params.category}</h1>
+      <main className="flex min-h-screen flex-col items-center justify-between  pt-[100px] border-t-4">
+        <h1>{params.category}</h1>
 
-      <div>
-        <form action={handleSubmit}>
-          <label htmlFor="username" required>
-            Username:{" "}
-          </label>
-          <input
-            className="text-slate-900"
-            type="text"
-            id="post-username"
-            name="post-username"
-            required
-            placeholder="Select a username"
-          />{" "}
-          <br />
-          <label htmlFor="post-title" required>
-            Title:{" "}
-          </label>
-          <input
-            className="  text-slate-900 "
-            type="text"
-            id="post-title"
-            name="post-title"
-            required
-            placeholder="Title"
-          />
-          {/* <div>
+        <div className="object-center w-[16rem] mr-[60px] border-2 mb-[1rem] border-cyan-500">
+          <form
+            action={handleSubmit}
+            className="object-center
+          "
+          >
+            <label htmlFor="username" className="" required>
+              Username:{" "}
+            </label>
+            <input
+              className="text-slate-900 w-[15.7rem]"
+              type="text"
+              id="post-username"
+              name="post-username"
+              required
+              placeholder="Select a username"
+            />{" "}
+            <br />
+            <label htmlFor="post-title" required className="pl-[0px]">
+              Title:{" "}
+            </label>
+            <input
+              className="  text-slate-900 w-[15.7rem]"
+              type="text"
+              id="post-title"
+              name="post-title"
+              required
+              placeholder="Title"
+            />
+            {/* <div>
             {" "}
             <label htmlFor="post-img" required>
               Image URL:{" "}
@@ -124,83 +129,103 @@ export default async function postsPage({ params }) {
               placeholder="Unsplash image link"
             />
           </div> */}
-          <div>
-            <label htmlFor="post-text" required>
-              Post:{" "}
-            </label>
-            <br />
-            <textarea
-              className=" h-[12rem] text-slate-900 "
-              type="text"
-              id="post-text"
-              name="post-text"
-              required
-              placeholder="Write a post"
-            />
-          </div>
-          <div>
-            <label htmlFor="pass">Passcode: </label>
+            <div className="">
+              <label htmlFor="post-text" required>
+                Post:{" "}
+              </label>
+              <br />
+              <textarea
+                className=" h-[12rem] w-[15.7rem] text-slate-900 "
+                type="text"
+                id="post-text"
+                name="post-text"
+                required
+                placeholder="Write a post"
+              />
+            </div>
+            <div>
+              <label htmlFor="pass">Passcode: </label>
 
-            <br />
-            <input
-              className="text-slate-900"
-              type="password"
-              id="user-pass"
-              name="wordpass"
-              required
-              placeholder="If want to delete"
-            />
-          </div>
-          <button
-            className="border-solid border-2 border-sky-500"
-            type="submit"
-          >
-            Submit Post
-          </button>
-        </form>
-      </div>
+              <br />
+              <input
+                className="text-slate-900 w-[15.7rem]"
+                type="password"
+                id="user-pass"
+                name="wordpass"
+                required
+                placeholder="Enable Deletion"
+              />
+            </div>
+            <button
+              className="border-solid border-2 border-sky-500"
+              type="submit"
+            >
+              Submit Post
+            </button>
+          </form>
+        </div>
 
-      <section className="">
-        {/* ^ for all post/ posts box container */}
+        <section className="">
+          {/* ^ for all post/ posts box container */}
 
-        {data.map((data) => (
-          <div key={data.id} className="">
-            {/* ^ for each post */}
+          {data.map((data) => (
+            <div
+              key={data.id}
+              className=" border-yellow-100 border-2 border-solid mr-[60px]
+              w-[16rem]"
+            >
+              {/* ^ for each post */}
 
-            {/* <Image
+              {/* <Image
               src="data.img_src"
               alt="user image"
               width={400}
               height={300}
             /> */}
-            <h3>Username: {data.username}</h3>
-            <h3>Title: {data.title}</h3>
-            <h4>{data.post_text}</h4>
-            <h5>Comments: {data.no_of_comments}</h5>
-            <Link href={`/${params.category}/${data.id}`}> See comments</Link>
-            <h5> Likes: {data.likes}</h5>
-            <LikeButton
-              idData={data.id}
-              nameTable={params.category}
-              path={params.category}
-            />
-            <DeleteButton
-              nameTable={params.category}
-              idData={data.id}
-              path={params.category}
-              isPost={1}
-              //! neededed to say if is post or comment.if is post, will run table drop on delete
-            />
-            {/* <form
+              <h3 className="bg-yellow-100 text-black font-serif border-2 border-yellow-100 w-[15.8rem]">
+                Username: {data.username}
+              </h3>
+              <h3 className=" w-[15.8rem] font-semibold border-ridge border-2 border-groove border-cyan-300 bg-cyan-300 text-black">
+                Title: {data.title}
+              </h3>
+              <h4 className=" h-auto w-[15.8rem] text-center object-center pt-[1rem] text-black bg-gray-400 font-bold text-[1.8rem] pb-[1rem]">
+                {data.post_text}
+              </h4>
+              <div className="flex flex-row justify-between border-1 border-yellow-200">
+                <h5>Comments: {data.no_of_comments}</h5>
+
+                <h5> Likes: {data.likes}</h5>
+              </div>
+              <div className="flex flex-row justify-between ">
+                <Link href={`/${params.category}/${data.id}`}>
+                  {" "}
+                  See comments
+                </Link>
+                <LikeButton
+                  idData={data.id}
+                  nameTable={params.category}
+                  path={params.category}
+                />{" "}
+              </div>
+              <DeleteButton
+                nameTable={params.category}
+                idData={data.id}
+                path={params.category}
+                isPost={1}
+                //! neededed to say if is post or comment.if is post, will run table drop on delete
+              />
+
+              {/* <form
               action={handleLike(params.category, data.id, params.category)}
             >
               <button className="border-solid border-2 border-green-500">
                 Like
               </button>
             </form>*/}
-          </div>
-        ))}
-      </section>
+            </div>
+          ))}
+        </section>
+      </main>{" "}
     </>
   );
 }
