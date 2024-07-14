@@ -188,7 +188,7 @@ export default async function postsPage({ params }) {
               <h3 className=" w-[15.8rem] font-semibold border-ridge border-2 border-groove border-cyan-300 bg-cyan-300 text-black">
                 Title: {data.title}
               </h3>
-              <h4 className=" h-auto w-[15.8rem] text-center object-center pt-[1rem] text-black bg-gray-400 font-bold text-[1.8rem] pb-[1rem]">
+              <h4 className=" h-auto w-[15.8rem] text-center object-center pt-[1rem] text-black bg-gray-200 font-bold text-[1.8rem] pb-[1rem]">
                 {data.post_text}
               </h4>
               <div className="flex flex-row justify-between border-1 border-yellow-200">

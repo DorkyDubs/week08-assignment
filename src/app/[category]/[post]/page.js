@@ -37,7 +37,8 @@ export default async function commentsPage({ params }) {
   username VARCHAR(255),
   comment_text VARCHAR (150),
   category TEXT,
-  likes INT
+  likes INT,
+  post_id INT
   )`);
     // post_id INT REFERENCES ${params.category} (id)//! breaks delete
     // async function handleLike(nameTable, postId) {
@@ -74,8 +75,8 @@ export default async function commentsPage({ params }) {
       // Need to put data into database
       const db = dbConnect();
       await db.query(
-        `INSERT INTO ${tableName} (username,comment_text,likes, category ) VALUES ($1,$2,$3,$4)`,
-        [commentUsername, commentText, 0, params.category]
+        `INSERT INTO ${tableName} (username,comment_text,likes, category, post_id ) VALUES ($1,$2,$3,$4,$5)`,
+        [commentUsername, commentText, 0, params.category, params.post]
       );
       const currentComments = await db.query(
         `SELECT no_of_comments FROM ${params.category} WHERE id = ${params.post} `
@@ -162,17 +163,19 @@ export default async function commentsPage({ params }) {
               </button>
             </form>
           </div>
-          <section className=" border-teal-50 border-2  w-[16rem]">
+          <section className="  w-[16rem]">
             {/* ^ for all comments */}
             {datas.map((data) => (
               <div key={data.id} className="">
                 {/* ^ for each comment */}
-                <h3 className="bg-teal-100 text-center text-black">
+                <h3 className="bg-teal-100 border-t-2 border-b-1 text-center text-black">
                   Username: {data.username}
                 </h3>
                 <h4 className="text-left">{data.post_text}</h4>
-                <h5 className="text-black bg-teal-200">Comment:</h5>{" "}
-                <h5 className="text-black bg-teal-300 font-bold">
+                <h5 className="text-black bg-teal-200 border-r-2 border-teal-100 border-l-2">
+                  Comment:
+                </h5>{" "}
+                <h5 className="text-black bg-teal-300 font-bold border-teal-100 border-r-2 border-l-2">
                   {data.comment_text}
                 </h5>
                 {/* <form action={handleLike(tableName, data.id)}>
@@ -180,7 +183,7 @@ export default async function commentsPage({ params }) {
                 Like
               </button>{" "}
             </form>*/}
-                <div className="flex flex-row justify-between">
+                <div className="flex flex-row justify-between  mb-[10px] border-teal-100 border-b-2 border-r-2 border-l-2">
                   <LikeButton
                     idData={data.id}
                     nameTable={tableName}
