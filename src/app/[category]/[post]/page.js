@@ -162,26 +162,31 @@ export default async function commentsPage({ params }) {
               </button>
             </form>
           </div>
-          <section className="">
+          <section className=" border-teal-50 border-2  w-[16rem]">
             {/* ^ for all comments */}
             {datas.map((data) => (
               <div key={data.id} className="">
                 {/* ^ for each comment */}
-                <h3>Username: {data.username}</h3>
-                <h4>{data.post_text}</h4>
-                <h5>Comments: {data.comment_text}</h5>
-                <h7>Likes : {data.likes}</h7>
+                <h3 className="bg-teal-100 text-center text-black">
+                  Username: {data.username}
+                </h3>
+                <h4 className="text-left">{data.post_text}</h4>
+                <h5 className="text-black bg-teal-200">Comment:</h5>{" "}
+                <h5 className="text-black bg-teal-300 font-bold">
+                  {data.comment_text}
+                </h5>
                 {/* <form action={handleLike(tableName, data.id)}>
               <button className="border-solid border-2 border-green-500">
                 Like
               </button>{" "}
             </form>*/}
-                <div>
+                <div className="flex flex-row justify-between">
                   <LikeButton
                     idData={data.id}
                     nameTable={tableName}
                     path={commentPath}
                   />
+                  <h7>Likes : {data.likes}</h7>
                   <DeleteButton
                     cat={params.category}
                     postId={params.post}

@@ -47,30 +47,36 @@ export default async function Home() {
 
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center justify-between pt-[100px] border-t-4 border-teal-400 border-dotted">
-        <div>
+      <main className="flex min-h-screen flex-col items-center content-center pt-[40px] border-t-4 border-teal-400 border-dotted">
+        <div className=" flex flex-row flex-wrap content-center items-center ml-[50px] font-extrabold text-2xl">
           {data.map((data) => (
-            <li key={data.id} className="">
+            <div
+              key={data.id}
+              className=" w-[15rem] h-[6rem] text-center   object-centerjustify-center pt-[10px] mt-[30px] m-[5px] text-white"
+            >
               <Link href={`${data.category_name}`}>{data.category_name}</Link>{" "}
+              <br />
               <Link href={`${data.category_name}`}>
                 {" "}
                 Posts: {data.no_of_posts}{" "}
               </Link>
               {/*//? yes this s is a duplicate, it's so each part can be clicked to go there. It's split incase they need to stack when styling */}
-            </li>
+            </div>
           ))}
         </div>
-        <div>
+        <div className="flex flex-column text-center pt-[3rem]">
           <form action={handleSubmit} className="pb-[100px] ">
             <label htmlFor="category-name">New Category: :</label>
-            <input
-              className="text-slate-900"
-              type="text"
-              id="category-name"
-              name="category-name"
-              required
-              placeholder="Enter New Category"
-            />
+            <div>
+              <input
+                className="text-slate-900"
+                type="text"
+                id="category-name"
+                name="category-name"
+                required
+                placeholder="Enter New Category"
+              />
+            </div>
             <button
               className="border-solid border-2 border-sky-500"
               type="submit"
