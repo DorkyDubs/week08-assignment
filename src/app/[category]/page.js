@@ -76,7 +76,7 @@ export default async function postsPage({ params }) {
       [wrangledPostCount]
     );
     console.log(wrangledPostCount);
-
+    revalidatePath(`/`);
     revalidatePath(`/${params.category}`);
     redirect(`/${params.category}`);
   }
